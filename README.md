@@ -1,5 +1,8 @@
 # lbs
 
+
+[![](https://jitpack.io/v/Hymnal-Qin/lbs.svg)](https://jitpack.io/#Hymnal-Qin/lbs)
+
 ----
 
 
