@@ -34,12 +34,12 @@ interface IMapService {
     fun setMarkerInfoWindowClickListener(listener: OnInfoWindowMarkerListener)
 
 
-    fun updateMarkers(markers: Array<LocationMarker>)
+    fun updateMarkers(vararg markers: LocationMarker)
 
     /**
      * 移除标记
      */
-    fun removeMarker(key: String)
+    fun removeMarker(vararg keys: String)
 
     /**
      * 移除所有标记

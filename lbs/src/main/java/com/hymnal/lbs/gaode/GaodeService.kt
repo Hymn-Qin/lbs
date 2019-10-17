@@ -97,7 +97,7 @@ class GaodeService(context: Context) : BaseMapService(context) {
         myLocationStyle!!.strokeWidth(1.0f)// 设置圆形的边框粗细
     }
 
-    override fun updateMarkers(markers: Array<LocationMarker>) {
+    override fun updateMarkers(vararg markers: LocationMarker) {
         for (marker in markers)
             updateMakerOneTimeSmooth(marker)
     }
@@ -149,12 +149,13 @@ class GaodeService(context: Context) : BaseMapService(context) {
 
     }
 
-    override fun removeMarker(key: String) {
-        if (mMarkersHashMap.containsKey(key)) {
-            mMarkersHashMap[key]!!.destroy()
-            mMarkersHashMap.remove(key)
-        }
-        logger.info("removeMarker key: $key")
+    override fun removeMarker(vararg keys: String) {
+        for (key in keys)
+            if (mMarkersHashMap.containsKey(key)) {
+                mMarkersHashMap[key]!!.destroy()
+                mMarkersHashMap.remove(key)
+                logger.info("removeMarker key: $key")
+            }
     }
 
     override fun addInfoWindowMarker(locationInfo: LocationInfo, bitmap: Bitmap) {
