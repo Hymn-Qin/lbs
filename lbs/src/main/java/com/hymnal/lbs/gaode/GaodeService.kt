@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
 
 import com.amap.api.location.AMapLocationClient
@@ -31,16 +30,12 @@ import com.amap.api.services.route.RideRouteResult
 import com.amap.api.services.route.RouteSearch
 import com.amap.api.services.route.WalkRouteResult
 import com.hymnal.lbs.*
-import org.slf4j.LoggerFactory
 
 import java.util.ArrayList
 import java.util.HashMap
 
 
 class GaodeService(context: Context) : BaseMapService(context) {
-
-
-    private val logger by lazy { LoggerFactory.getLogger(GaodeService::class.java) }
 
     //位置定位对象
     private var mLocationClient: AMapLocationClient? = null
@@ -112,13 +107,11 @@ class GaodeService(context: Context) : BaseMapService(context) {
             val startLatLng = smoothMarker.position
             points.add(startLatLng)
             points.add(endLatLng)
-            logger.info("updateMakerOneTimeSmooth update key: ${marker.key}")
         } else {
             points.add(endLatLng)
             points.add(endLatLng)
             smoothMarker = SmoothMoveMarker(aMap)
             mMarkersHashMap[marker.key] = smoothMarker
-            logger.info("updateMakerOneTimeSmooth add key: ${marker.key}")
         }
         // 设置滑动的轨迹左边点
         smoothMarker.setPoints(points)
@@ -129,7 +122,6 @@ class GaodeService(context: Context) : BaseMapService(context) {
         smoothMarker.setRotate(marker.rotate)
         // 开始滑动
         smoothMarker.startSmoothMove()
-        logger.info("updateMakerOneTimeSmooth location: ${marker.latitude},${marker.longitude}")
 
         //        if (mMarkersHashMap.containsKey(marker.key)) {
 //            Marker smoothMarker = mMarkersHashMap.get(marker.key);
@@ -154,7 +146,6 @@ class GaodeService(context: Context) : BaseMapService(context) {
             if (mMarkersHashMap.containsKey(key)) {
                 mMarkersHashMap[key]!!.destroy()
                 mMarkersHashMap.remove(key)
-                logger.info("removeMarker key: $key")
             }
     }
 
@@ -200,7 +191,6 @@ class GaodeService(context: Context) : BaseMapService(context) {
     override fun clearAllMarker() {
         aMap.clear()
         mMarkersHashMap.clear()
-        logger.info("clearAllMarker")
     }
 
     override fun poiSearch(key: String, listener: OnSearchedListener) {
@@ -238,7 +228,6 @@ class GaodeService(context: Context) : BaseMapService(context) {
                 ), scale.toFloat()
             )
         )
-        logger.info("moveCamera location: ${locationInfo.latitude},${locationInfo.longitude} scale:$scale")
     }
 
     override fun moveCamera(locationInfo1: LocationInfo, locationInfo2: LocationInfo) {
@@ -246,7 +235,6 @@ class GaodeService(context: Context) : BaseMapService(context) {
         val latLngEnd = LatLng(locationInfo2.latitude, locationInfo2.longitude)
         val latLngBounds = LatLngBounds(latLngFirst, latLngEnd)
         aMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 20))
-        logger.info("moveCamera location: ${locationInfo2.latitude},${locationInfo2.longitude}")
     }
 
     override fun startOnceLocation() {
@@ -351,8 +339,6 @@ class GaodeService(context: Context) : BaseMapService(context) {
             if (mLocationChangeListener != null) {
                 mLocationChangeListener!!.onLocationChanged(aMapLocation)
 
-                logger.info("onLocationChanged")
-
                 if (firstLocation) {
                     firstLocation = false
                     aMap.animateCamera(CameraUpdateFactory.zoomTo(18f))
@@ -370,8 +356,6 @@ class GaodeService(context: Context) : BaseMapService(context) {
             if (mLocationChangeListener != null) {
                 // 地图已经激活，通知蓝点实时更新
                 mLocationChangeListener!!.onLocationChanged(aMapLocation)// 显示系统小蓝点
-
-                logger.info("onLocationChanged")
 
                 if (firstLocation) {
                     firstLocation = false
@@ -395,7 +379,6 @@ class GaodeService(context: Context) : BaseMapService(context) {
 
             mLocationClient?.startLocation()
         }
-        logger.info("onResume setUpLocation")
     }
 
     override fun calculateLineDistance(start: LocationInfo, end: LocationInfo): Float {
@@ -414,7 +397,6 @@ class GaodeService(context: Context) : BaseMapService(context) {
             override fun activate(onLocationChangedListener: LocationSource.OnLocationChangedListener) {
                 mLocationChangeListener = onLocationChangedListener
 
-                logger.info("activate")
             }
 
             override fun deactivate() {
@@ -431,14 +413,12 @@ class GaodeService(context: Context) : BaseMapService(context) {
         uiSettings.isZoomControlsEnabled = false
         uiSettings.isZoomGesturesEnabled = false
         aMap.isMyLocationEnabled = false
-        logger.info("onCreate uiSettings")
         // 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false，这里先不想业务使用方开放
     }
 
     override fun onCreate(savedState: Bundle?) {
         super.onCreate(savedState)
         mapView.onCreate(savedState)
-        logger.info("onCreate")
         setUpMap()
 
     }
@@ -446,21 +426,18 @@ class GaodeService(context: Context) : BaseMapService(context) {
     override fun onResume() {
         super.onResume()
         mapView.onResume()
-        logger.info("onResume")
         setUpLocation()
     }
 
     override fun onPause() {
         super.onPause()
         mapView.onPause()
-        logger.info("onPause")
         mLocationClient?.stopLocation()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         mapView.onDestroy()
-        logger.info("onDestroy")
         mLocationClient?.onDestroy()
     }
 }
