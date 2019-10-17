@@ -1,0 +1,24 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+将删除 .idea/codeStyles/
+将删除 .idea/dbnavigator.xml
+将删除 .idea/gradle.xml
+将删除 .idea/misc.xml
+将删除 .idea/runConfigurations.xml
+将删除 .idea/vcs.xml
+将删除 app/.gitignore
+将删除 app/libs/
+将删除 lbs/.gitignore
+将删除 lbs/src/main/java/com/hymnal/lbs/baidu/
