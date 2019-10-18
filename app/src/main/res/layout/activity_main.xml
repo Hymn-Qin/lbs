@@ -16,4 +16,21 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/in"
+        android:background="@drawable/zoom_in"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <Button
+        android:id="@+id/out"
+        android:background="@drawable/zoom_out"
+
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/in"/>
 </android.support.constraint.ConstraintLayout>

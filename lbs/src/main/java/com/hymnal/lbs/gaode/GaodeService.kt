@@ -219,6 +219,18 @@ class GaodeService(context: Context) : BaseMapService(context) {
         }
     }
 
+    override fun zoomInAndOut(zoom: Boolean) {
+        if (zoom) {
+            aMap.animateCamera(
+                CameraUpdateFactory.zoomIn()
+            )
+        } else {
+            aMap.animateCamera(
+                CameraUpdateFactory.zoomOut()
+            )
+        }
+    }
+
     override fun moveCamera(locationInfo: LocationInfo, scale: Int) {
         aMap.animateCamera(
             CameraUpdateFactory.newLatLngZoom(
@@ -226,6 +238,17 @@ class GaodeService(context: Context) : BaseMapService(context) {
                     locationInfo.latitude,
                     locationInfo.longitude
                 ), scale.toFloat()
+            )
+        )
+    }
+
+    override fun moveCamera(locationInfo: LocationInfo) {
+        aMap.animateCamera(
+            CameraUpdateFactory.newLatLng(
+                LatLng(
+                    locationInfo.latitude,
+                    locationInfo.longitude
+                )
             )
         )
     }
@@ -412,7 +435,9 @@ class GaodeService(context: Context) : BaseMapService(context) {
         uiSettings.isMyLocationButtonEnabled = false
         uiSettings.isZoomControlsEnabled = false
         uiSettings.isZoomGesturesEnabled = false
-        aMap.isMyLocationEnabled = false
+        uiSettings.setAllGesturesEnabled(false)
+        aMap.isMyLocationEnabled = true
+//        aMap.animateCamera(CameraUpdateFactory.zoomIn())
         // 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false，这里先不想业务使用方开放
     }
 

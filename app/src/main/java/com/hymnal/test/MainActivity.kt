@@ -14,5 +14,12 @@ class MainActivity : AppCompatActivity() {
         val iMapService = GaodeService(this)
         iMapService.onCreate(savedInstanceState)
         map.addView(iMapService.map)
+        `in`.setOnClickListener {
+            iMapService.zoomInAndOut(true)
+        }
+        out.setOnClickListener {
+            iMapService.zoomInAndOut(false)
+        }
+
     }
 }

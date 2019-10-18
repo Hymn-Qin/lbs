@@ -66,6 +66,10 @@ interface IMapService {
 
     fun moveCamera(locationInfo: LocationInfo, scale: Int)
 
+    fun moveCamera(locationInfo: LocationInfo)
+
+    fun zoomInAndOut(zoom: Boolean)
+
     /**
      * 移动相机到范围
      */
