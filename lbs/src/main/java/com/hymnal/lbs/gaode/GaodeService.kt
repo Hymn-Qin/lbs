@@ -299,6 +299,21 @@ class GaodeService(context: Context) : BaseMapService(context) {
         aMap.animateCamera(CameraUpdateFactory.changeTilt(tilt))
     }
 
+    //Color.argb(255,255,20,147)
+    override fun polyline (list: List<LatLng>, width: Float, color: Int) {
+        aMap.mapTextZIndex = 2
+        val line = PolylineOptions()
+            //手动数据测试
+            //.add(new LatLng(26.57, 106.71),new LatLng(26.14,105.55),new LatLng(26.58, 104.82), new LatLng(30.67, 104.06))
+            //集合数据
+            .addAll(list)
+            //线的宽度
+            .width(width).setDottedLine(false).geodesic(true)
+            //颜色
+            .color(color)
+        aMap.addPolyline(line)
+    }
+
 
     override fun driverRoute(
         start: LocationInfo,

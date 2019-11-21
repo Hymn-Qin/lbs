@@ -89,6 +89,8 @@ interface IMapService {
 
     fun changeTilt(tilt: Float)
 
+    fun polyline (list: List<LatLng>, width: Float, color: Int)
+
     /**
      * 驾车线路规划
      */
