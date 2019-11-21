@@ -4,6 +4,7 @@ package com.hymnal.lbs
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
+import com.amap.api.maps.model.BitmapDescriptor
 
 import com.amap.api.maps.model.LatLng
 
@@ -90,6 +91,9 @@ interface IMapService {
     fun changeTilt(tilt: Float)
 
     fun polyline(tag: String, list: List<LatLng>, width: Float, color: Int)
+
+    fun polyline(tag: String, list: List<LatLng>, textures: List<BitmapDescriptor>, indexList:List<Int>, width: Float)
+
     fun removeLine(tag: String)
 
     /**

@@ -310,7 +310,30 @@ class GaodeService(context: Context) : BaseMapService(context) {
             .setDottedLine(false)
             .geodesic(true)
             //颜色
+            .setUseTexture(true)
             .color(color)
+        val polyline = aMap.addPolyline(line)
+        polyline.isVisible = true
+        lineHashMap[tag] = polyline
+    }
+
+    override fun polyline(tag: String, list: List<LatLng>, textures: List<BitmapDescriptor>, indexList:List<Int>, width: Float) {
+        lineHashMap[tag]?.remove()
+        aMap.mapTextZIndex = 2
+
+        val line = PolylineOptions()
+            //手动数据测试
+            //.add(new LatLng(26.57, 106.71),new LatLng(26.14,105.55),new LatLng(26.58, 104.82), new LatLng(30.67, 104.06))
+            //集合数据
+            .addAll(list)
+            //线的宽度
+            .width(width)
+            .setDottedLine(false)
+            .geodesic(true)
+            //颜色
+            .setCustomTextureList(textures)
+            .setCustomTextureIndex(indexList)
+            .setUseTexture(true)
         val polyline = aMap.addPolyline(line)
         polyline.isVisible = true
         lineHashMap[tag] = polyline
