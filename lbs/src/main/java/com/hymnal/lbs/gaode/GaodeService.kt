@@ -61,6 +61,8 @@ class GaodeService(context: Context) : BaseMapService(context) {
         locationOption?.locationMode = AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
 
         locationOption?.interval = 1000
+        locationOption?.locationPurpose = AMapLocationClientOption.AMapLocationPurpose.Transport
+
         //设置定位参数
         //        mLocationClient?.setLocationOption(locationOption)
         //获取一次定位结果：
@@ -79,10 +81,11 @@ class GaodeService(context: Context) : BaseMapService(context) {
 
     override fun setLocationRes(res: Int) {
         myLocationStyle = MyLocationStyle()
-        myLocationStyle!!.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE)
+//        myLocationStyle!!.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE)
         myLocationStyle!!.myLocationIcon(BitmapDescriptorFactory.fromResource(res))// 设置小蓝点的图标
         myLocationStyle!!.strokeColor(Color.BLACK)// 设置圆形的边框颜色
         myLocationStyle!!.radiusFillColor(Color.TRANSPARENT)// 设置圆形的填充颜色
+        myLocationStyle!!.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER)
         // myLocationStyle.anchor(int,int)//设置小蓝点的锚点
         myLocationStyle!!.strokeWidth(1.0f)// 设置圆形的边框粗细
     }
