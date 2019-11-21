@@ -13,12 +13,7 @@ import com.amap.api.maps.AMapUtils
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.LocationSource
 import com.amap.api.maps.MapView
-import com.amap.api.maps.model.BitmapDescriptorFactory
-import com.amap.api.maps.model.LatLng
-import com.amap.api.maps.model.LatLngBounds
-import com.amap.api.maps.model.MarkerOptions
-import com.amap.api.maps.model.MyLocationStyle
-import com.amap.api.maps.model.PolylineOptions
+import com.amap.api.maps.model.*
 import com.amap.api.maps.utils.overlay.SmoothMoveMarker
 import com.amap.api.services.core.AMapException
 import com.amap.api.services.core.LatLonPoint
@@ -299,19 +294,30 @@ class GaodeService(context: Context) : BaseMapService(context) {
         aMap.animateCamera(CameraUpdateFactory.changeTilt(tilt))
     }
 
+    private val lineHashMap = HashMap<String, Polyline>()
     //Color.argb(255,255,20,147)
-    override fun polyline (list: List<LatLng>, width: Float, color: Int) {
+    override fun polyline(tag: String, list: List<LatLng>, width: Float, color: Int) {
+        lineHashMap[tag]?.remove()
         aMap.mapTextZIndex = 2
+
         val line = PolylineOptions()
             //手动数据测试
             //.add(new LatLng(26.57, 106.71),new LatLng(26.14,105.55),new LatLng(26.58, 104.82), new LatLng(30.67, 104.06))
             //集合数据
             .addAll(list)
             //线的宽度
-            .width(width).setDottedLine(false).geodesic(true)
+            .width(width)
+            .setDottedLine(false)
+            .geodesic(true)
             //颜色
             .color(color)
-        aMap.addPolyline(line)
+        val polyline = aMap.addPolyline(line)
+        polyline.isVisible = true
+        lineHashMap[tag] = polyline
+    }
+
+    override fun removeLine(tag: String) {
+        lineHashMap[tag]?.remove()
     }
 
 

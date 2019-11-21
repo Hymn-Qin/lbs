@@ -89,7 +89,8 @@ interface IMapService {
 
     fun changeTilt(tilt: Float)
 
-    fun polyline (list: List<LatLng>, width: Float, color: Int)
+    fun polyline(tag: String, list: List<LatLng>, width: Float, color: Int)
+    fun removeLine(tag: String)
 
     /**
      * 驾车线路规划
