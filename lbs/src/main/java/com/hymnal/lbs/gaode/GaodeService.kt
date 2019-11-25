@@ -60,9 +60,8 @@ class GaodeService(context: Context) : BaseMapService(context) {
         //设置为高精度定位模式
         locationOption?.locationMode = AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
 
-        locationOption?.interval = 1000
+        locationOption?.interval = 2000
         locationOption?.locationPurpose = AMapLocationClientOption.AMapLocationPurpose.Transport
-
         //设置定位参数
         //        mLocationClient?.setLocationOption(locationOption)
         //获取一次定位结果：
@@ -83,7 +82,7 @@ class GaodeService(context: Context) : BaseMapService(context) {
         myLocationStyle = MyLocationStyle()
 //        myLocationStyle!!.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE)
         myLocationStyle!!.myLocationIcon(BitmapDescriptorFactory.fromResource(res))// 设置小蓝点的图标
-        myLocationStyle!!.strokeColor(Color.BLACK)// 设置圆形的边框颜色
+        myLocationStyle!!.strokeColor(Color.BLUE)// 设置圆形的边框颜色
         myLocationStyle!!.radiusFillColor(Color.TRANSPARENT)// 设置圆形的填充颜色
         myLocationStyle!!.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER)
         // myLocationStyle.anchor(int,int)//设置小蓝点的锚点
@@ -173,6 +172,28 @@ class GaodeService(context: Context) : BaseMapService(context) {
         marker.title = locationInfo.name
         marker.snippet = locationInfo.address
         marker.rotateAngle = 0f
+        marker.showInfoWindow()
+    }
+
+    fun addInfoWindowMarker(
+        locationInfo: LocationInfo,
+        bitmap: Bitmap,
+        p0: AMap.InfoWindowAdapter
+    ) {
+        aMap.setInfoWindowAdapter(p0)
+        val latLng = LatLng(locationInfo.latitude, locationInfo.longitude)
+        val options = MarkerOptions()
+        options.icon(BitmapDescriptorFactory.fromBitmap(bitmap))
+        options.anchor(0.5f, 0.5f)
+        options.position(latLng)
+        options.isFlat = true
+        options.draggable(true)
+        options.title(locationInfo.name)
+        val marker = aMap.addMarker(options)
+        marker.rotateAngle = 0f
+        marker.title = locationInfo.name
+        marker.snippet = locationInfo.address
+        marker.setAnchor(1f, 1f)
         marker.showInfoWindow()
     }
 
@@ -320,7 +341,13 @@ class GaodeService(context: Context) : BaseMapService(context) {
         lineHashMap[tag] = polyline
     }
 
-    override fun polyline(tag: String, list: List<LatLng>, textures: List<BitmapDescriptor>, indexList:List<Int>, width: Float) {
+    override fun polyline(
+        tag: String,
+        list: List<LatLng>,
+        textures: List<BitmapDescriptor>,
+        indexList: List<Int>,
+        width: Float
+    ) {
         lineHashMap[tag]?.remove()
         aMap.mapTextZIndex = 2
 

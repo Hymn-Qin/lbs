@@ -31,6 +31,12 @@ dependencies {
 
     implementation project(':lbs')
 
+    implementation 'com.amap.api:navi-3dmap:latest.integration'//   导航
+
+    implementation 'com.amap.api:search:latest.integration'//    搜索
+
+    implementation 'com.amap.api:location:latest.integration'//定位
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
