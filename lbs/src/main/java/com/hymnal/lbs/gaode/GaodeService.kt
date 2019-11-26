@@ -546,6 +546,10 @@ class GaodeService(context: Context) : BaseMapService(context) {
         // 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false，这里先不想业务使用方开放
     }
 
+    fun setMapCameraListener(listener: AMap.OnCameraChangeListener) {
+        aMap.setOnCameraChangeListener(listener)
+    }
+
     override fun onCreate(savedState: Bundle?) {
         super.onCreate(savedState)
         mapView.onCreate(savedState)
