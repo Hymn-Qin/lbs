@@ -3,6 +3,7 @@ package com.hymnal.lbs.gaode
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.PointF
 import android.os.Bundle
 import android.view.View
 
@@ -44,6 +45,8 @@ class GaodeService(context: Context) : BaseMapService(context) {
     private var firstLocation = true
     // 管理地图标记集合
     private val mMarkersHashMap = HashMap<String, SmoothMoveMarker>()
+
+    private val markersHashMap = HashMap<String, Marker>()
 
     // 异步路径规划驾车模式查询
     private val mRouteSearch = RouteSearch(context)
@@ -146,33 +149,50 @@ class GaodeService(context: Context) : BaseMapService(context) {
             }
     }
 
-    override fun addInfoWindowMarker(locationInfo: LocationInfo, bitmap: Bitmap) {
+    override fun addInfoWindowMarker(locationInfo: LocationInfo, bitmap: Bitmap, point: PointF) {
         val latLng = LatLng(locationInfo.latitude, locationInfo.longitude)
-        //        // 如果已经存在则更新角度、位置   // 如果不存在则创建
-        //        Marker marker = mMarkersHashMap.get(locationInfo.key);
-        //        if (marker != null) {
-        //            marker.setPosition(latLng);
-        //            marker.setTitle(locationInfo.name);
-        //            marker.setSnippet(locationInfo.address);
-        //            marker.setRotateAngle(locationInfo.rotation);
-        //        } else {
-        //
-        //            mMarkersHashMap.put(locationInfo.key, marker);
-        //            if (locationInfo.animation != null) {
-        //                marker.setAnimation(locationInfo.animation);
-        //                marker.startAnimation();
-        //            }
-        //        }
+
+
         val options = MarkerOptions()
         options.icon(BitmapDescriptorFactory.fromBitmap(bitmap))
-        options.anchor(0.5f, 0.5f)
+        options.anchor(point.x, point.y)
         options.position(latLng)
+        options.isFlat = true
+        options.draggable(true)
         options.title(locationInfo.name)
+        options.snippet(locationInfo.address)
         val marker = aMap.addMarker(options)
-        marker.title = locationInfo.name
-        marker.snippet = locationInfo.address
-        marker.rotateAngle = 0f
-        marker.showInfoWindow()
+
+        marker.isInfoWindowEnable = false
+        markersHashMap[locationInfo.key] = marker
+    }
+
+    override fun addInfoWindowMarker(locationInfo: LocationInfo, view: View, point: PointF) {
+        val latLng = LatLng(locationInfo.latitude, locationInfo.longitude)
+
+
+        val options = MarkerOptions()
+        options.icon(BitmapDescriptorFactory.fromView(view))
+        options.anchor(point.x, point.y)
+        options.position(latLng)
+        options.isFlat = true
+        options.draggable(true)
+        options.title(locationInfo.name)
+        options.snippet(locationInfo.address)
+        val marker = aMap.addMarker(options)
+
+        marker.isInfoWindowEnable = false
+        markersHashMap[locationInfo.key] = marker
+    }
+
+    fun clearAllInfoMarker() {
+        markersHashMap.forEach {
+            it.value.destroy()
+        }
+    }
+
+    fun clearInfoMarker(key: String) {
+        markersHashMap[key]?.destroy()
     }
 
     fun addInfoWindowMarker(
@@ -195,6 +215,8 @@ class GaodeService(context: Context) : BaseMapService(context) {
         marker.snippet = locationInfo.address
         marker.setAnchor(1f, 1f)
         marker.showInfoWindow()
+        marker.isVisible = true
+        markersHashMap[locationInfo.key] = marker
     }
 
     override fun setMarkerInfoWindowClickListener(listener: OnInfoWindowMarkerListener) {
@@ -509,7 +531,11 @@ class GaodeService(context: Context) : BaseMapService(context) {
         uiSettings.isMyLocationButtonEnabled = false
         uiSettings.isZoomControlsEnabled = false
         uiSettings.isZoomGesturesEnabled = false
-        uiSettings.setAllGesturesEnabled(true)
+        uiSettings.setAllGesturesEnabled(false)
+        uiSettings.isZoomGesturesEnabled = true
+        uiSettings.isScrollGesturesEnabled = true
+        uiSettings.isRotateGesturesEnabled = true
+        uiSettings.isGestureScaleByMapCenter = true
         uiSettings.setLogoBottomMargin(-50)
         aMap.isMyLocationEnabled = true
 //        aMap.animateCamera(CameraUpdateFactory.zoomIn())

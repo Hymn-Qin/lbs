@@ -2,6 +2,7 @@ package com.hymnal.lbs
 
 
 import android.graphics.Bitmap
+import android.graphics.PointF
 import android.os.Bundle
 import android.view.View
 import com.amap.api.maps.model.BitmapDescriptor
@@ -29,8 +30,8 @@ interface IMapService {
      */
     fun setLocationRes(res: Int)
 
-    fun addInfoWindowMarker(locationInfo: LocationInfo, bitmap: Bitmap)
-
+    fun addInfoWindowMarker(locationInfo: LocationInfo, bitmap: Bitmap, point: PointF)
+    fun addInfoWindowMarker(locationInfo: LocationInfo, view: View, point: PointF)
 
     fun setMarkerInfoWindowClickListener(listener: OnInfoWindowMarkerListener)
 
