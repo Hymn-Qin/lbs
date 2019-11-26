@@ -120,6 +120,8 @@ class GaodeService(context: Context) : BaseMapService(context) {
         // 设置滑动的总时间
         smoothMarker.setTotalDuration(marker.animTime)
         smoothMarker.setRotate(marker.rotate)
+        smoothMarker.marker.isInfoWindowEnable = false
+        smoothMarker.marker.isClickable = false
         // 开始滑动
         smoothMarker.startSmoothMove()
 
@@ -158,12 +160,12 @@ class GaodeService(context: Context) : BaseMapService(context) {
         options.anchor(point.x, point.y)
         options.position(latLng)
         options.isFlat = true
-        options.draggable(true)
         options.title(locationInfo.name)
         options.snippet(locationInfo.address)
         val marker = aMap.addMarker(options)
-
         marker.isInfoWindowEnable = false
+        marker.isClickable = false
+        marker.isFlat = true
         markersHashMap[locationInfo.key] = marker
     }
 
@@ -176,12 +178,12 @@ class GaodeService(context: Context) : BaseMapService(context) {
         options.anchor(point.x, point.y)
         options.position(latLng)
         options.isFlat = true
-        options.draggable(true)
         options.title(locationInfo.name)
         options.snippet(locationInfo.address)
         val marker = aMap.addMarker(options)
-
         marker.isInfoWindowEnable = false
+        marker.isClickable = false
+        marker.isFlat = true
         markersHashMap[locationInfo.key] = marker
     }
 
@@ -216,6 +218,8 @@ class GaodeService(context: Context) : BaseMapService(context) {
         marker.setAnchor(1f, 1f)
         marker.showInfoWindow()
         marker.isVisible = true
+        marker.isClickable = false
+        marker.isFlat = true
         markersHashMap[locationInfo.key] = marker
     }
 
