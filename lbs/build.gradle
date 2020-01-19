@@ -10,7 +10,7 @@ android {
     defaultConfig {
         minSdkVersion 19
         versionCode 1
-        versionName "1.1.1"
+        versionName "1.1.2"
         targetSdkVersion 28
 
     }
@@ -46,6 +46,8 @@ dependencies {
     implementation 'com.amap.api:search:latest.integration'//    搜索
 
     implementation 'com.amap.api:location:latest.integration'//定位
+
+    implementation 'org.slf4j:slf4j-api:1.7.26'
 
 }
 repositories {

@@ -32,7 +32,6 @@ interface IMapService {
 
     fun addInfoWindowMarker(locationInfo: LocationInfo, bitmap: Bitmap, point: PointF)
     fun addInfoWindowMarker(locationInfo: LocationInfo, view: View, point: PointF)
-
     fun setMarkerInfoWindowClickListener(listener: OnInfoWindowMarkerListener)
 
 
