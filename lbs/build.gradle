@@ -10,7 +10,7 @@ android {
     defaultConfig {
         minSdkVersion 19
         versionCode 1
-        versionName "1.1.3"
+        versionName "1.1.4"
         targetSdkVersion 28
 
     }
@@ -41,11 +41,11 @@ dependencies {
 //    implementation 'com.amap.api:map2d:5.0.0'//   2D地图
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    implementation 'com.amap.api:navi-3dmap:latest.integration'//   导航
+    implementation 'com.amap.api:navi-3dmap:7.1.0_3dmap7.1.0'//   导航
 
-    implementation 'com.amap.api:search:latest.integration'//    搜索
+    implementation 'com.amap.api:search:7.1.0'//    搜索
 
-    implementation 'com.amap.api:location:latest.integration'//定位
+    implementation 'com.amap.api:location:4.7.2'//定位
 
     implementation 'org.slf4j:slf4j-api:1.7.26'
 
